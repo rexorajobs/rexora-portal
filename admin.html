@@ -1,0 +1,14 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rexora Admin</title><style>body{font-family:Arial;margin:0;background:#f5f7fb;color:#172033}.top{background:#0b1f3a;color:white;padding:22px}.wrap{max-width:1100px;margin:30px auto;padding:0 18px}.card{background:white;padding:25px;border-radius:15px;box-shadow:0 8px 25px #0001}.row{display:flex;gap:10px;margin-bottom:15px}input,select{padding:11px;border:1px solid #d8dfeb;border-radius:8px}button{padding:11px 16px;border:0;border-radius:8px;background:#1769aa;color:white;font-weight:bold;cursor:pointer}table{width:100%;border-collapse:collapse;margin-top:20px;font-size:13px}th,td{padding:10px;border-bottom:1px solid #e8ecf2;text-align:left}a{color:#1769aa}.muted{color:#687386}</style></head>
+<body><div class="top"><h2>Rexora Portal — Admin</h2><div>Candidate management dashboard</div></div><main class="wrap"><div class="card">
+<div class="row"><input id="key" type="password" placeholder="Admin key"><button onclick="load()">Load Candidates</button></div>
+<div class="muted">For security, configure ADMIN_KEY in Code.gs before using this page publicly.</div><div id="out"></div></div></main>
+<script>
+const API="https://script.google.com/macros/s/AKfycbzWkXbMin54MYYEWNCSwAgZBdo4sRvPn1ZsUFJQL0ENshLY5OpbTSOi9rpYElI2WoOV/exec";
+async function load(){const k=document.getElementById("key").value;if(!k)return;
+try{const r=await fetch(API+"?action=list&key="+encodeURIComponent(k));const d=await r.json();
+if(!d.success)return out.innerHTML="<p>"+(d.message||"Access denied")+"</p>";
+let h="<table><tr><th>Reg No.</th><th>Date</th><th>Name</th><th>Mobile</th><th>Experience</th><th>Technology</th><th>Status</th><th>Resume</th></tr>";
+d.rows.forEach(x=>h+="<tr>"+x.map((v,i)=>i===8?"<td><a href='"+v+"' target='_blank'>Open</a></td>":"<td>"+(v??"")+"</td>").join("")+"</tr>");h+="</table>";out.innerHTML=h;
+}catch(e){out.innerHTML="<p>Unable to load dashboard.</p>";}}
+</script></body></html>

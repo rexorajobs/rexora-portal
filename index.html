@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rexora Portal | Candidate Registration</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f5f7fb;color:#152238}
+.header{background:linear-gradient(135deg,#071a33,#123f68);color:white}.bar{max-width:1100px;margin:auto;padding:24px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:14px;align-items:center}.mark{width:52px;height:52px;border-radius:12px;background:white;color:#0a2442;display:grid;place-items:center;font-weight:900;font-size:20px}.brand h1{margin:0;font-size:25px}.brand span{font-size:12px;opacity:.75}
+.admin{color:white;text-decoration:none;border:1px solid #ffffff55;padding:9px 13px;border-radius:9px;font-size:13px}
+.hero{max-width:1100px;margin:30px auto 0;padding:0 24px 36px}.hero h2{font-size:36px;margin:0 0 8px}.hero p{margin:0;opacity:.85;max-width:700px}
+.wrap{max-width:900px;margin:-5px auto 50px;padding:0 18px}.card{background:#fff;border-radius:18px;box-shadow:0 12px 35px #071a3314;padding:32px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.full{grid-column:1/-1}.section{grid-column:1/-1;border-top:1px solid #e7ebf2;padding-top:22px;margin-top:3px}
+.section h3{margin:0 0 16px;font-size:16px}.intro{margin-bottom:25px}.intro h2{margin:0 0 5px}.intro p{color:#6c788a;margin:0}
+label{display:block;font-size:13px;font-weight:750;margin-bottom:7px}input,select,textarea{width:100%;padding:12px 13px;border:1px solid #d8dfeb;border-radius:9px;font-size:14px;background:white}textarea{min-height:90px;resize:vertical}input:focus,select:focus,textarea:focus{outline:2px solid #1769aa22;border-color:#1769aa}
+.radios{display:flex;gap:24px}.radios label{font-weight:500;display:flex;gap:7px;align-items:center}.radios input{width:auto}
+.hint{font-size:11px;color:#7a8494;margin-top:5px}.btn{width:100%;border:0;border-radius:10px;padding:14px;background:#1769aa;color:white;font-size:16px;font-weight:800;cursor:pointer;margin-top:25px}.btn:disabled{opacity:.6}
+.msg{display:none;margin-top:15px;padding:13px;border-radius:9px;font-size:14px}.ok{display:block;background:#e9f7ef;color:#12663e}.err{display:block;background:#fdecec;color:#a01c1c}
+.footer{text-align:center;color:#7a8494;font-size:12px;padding:25px}
+@media(max-width:680px){.grid{grid-template-columns:1fr}.full,.section{grid-column:auto}.hero h2{font-size:29px}.card{padding:22px}.admin{display:none}}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="bar"><div class="brand"><div class="mark">RX</div><div><h1>Rexora Portal</h1><span>Consultancy Services • Candidate Registration</span></div></div><a class="admin" href="admin.html">Admin</a></div>
+<div class="hero"><h2>Join the Rexora Talent Network</h2><p>Submit your professional profile and latest resume. Our recruitment team can contact you for suitable opportunities.</p></div>
+</header>
+
+<main class="wrap"><div class="card">
+<div class="intro"><h2>Candidate Registration</h2><p>Fields marked * are required.</p></div>
+<form id="f">
+<div class="grid">
+<div><label>First Name *</label><input id="firstName" required></div>
+<div><label>Last Name *</label><input id="lastName" required></div>
+<div><label>Mobile Number *</label><input id="mobile" type="tel" pattern="[0-9+ ()-]{8,20}" required></div>
+<div><label>Email Address *</label><input id="email" type="email" required></div>
+<div><label>Experience (Years) *</label><input id="experience" type="number" min="0" max="60" step=".1" required></div>
+<div><label>Current Location</label><input id="location" placeholder="City, Country"></div>
+<div class="full"><label>Technology / Position *</label><select id="technology" required><option value="">Select</option>
+<option>Welding Inspector</option><option>CSWIP Welding Inspector</option><option>Coating Inspector</option><option>Painting Inspector</option>
+<option>QA/QC Inspector</option><option>QC Inspector</option><option>API Inspector</option><option>Mechanical Inspector</option>
+<option>Electrical Inspector</option><option>Instrumentation Inspector</option><option>NDT - UT</option><option>NDT - RT</option>
+<option>NDT - MT</option><option>NDT - PT</option><option>NDT - VT</option><option>PAUT</option><option>TOFD</option>
+<option>NDT Multi Technician</option><option>IRATA</option><option>QHSE Officer</option><option>HSE Officer</option>
+<option>ISO/QMS Officer</option><option>Other</option></select></div>
+
+<div class="section"><h3>Certifications & Professional Details</h3></div>
+<div class="full"><label>Certifications</label><input id="certifications" placeholder="e.g. CSWIP 3.1, PCN UT Level II, API 510"></div>
+<div class="full"><label>Additional Notes</label><textarea id="notes" placeholder="Anything else you want Rexora to know"></textarea></div>
+
+<div class="section"><h3>Service Charge & Resume</h3></div>
+<div class="full"><label>Agreed for Service Charge? *</label><div class="radios">
+<label><input type="radio" name="charge" value="Yes" required> Yes</label><label><input type="radio" name="charge" value="No"> No</label></div></div>
+<div class="full"><label>Upload Latest Resume * (PDF/DOC/DOCX, max 8 MB)</label><input id="resume" type="file" accept=".pdf,.doc,.docx" required>
+<div class="hint">The resume is automatically stored in the Google Drive folder for the selected technology/position.</div></div>
+</div>
+<button class="btn" id="submit" type="submit">Submit Profile</button><div id="msg" class="msg"></div>
+</form></div></main>
+<div class="footer">© Rexora Consultancy Services</div>
+
+<script>
+const API_URL="https://script.google.com/macros/s/AKfycbzWkXbMin54MYYEWNCSwAgZBdo4sRvPn1ZsUFJQL0ENshLY5OpbTSOi9rpYElI2WoOV/exec";
+const form=document.getElementById("f"), msg=document.getElementById("msg"), btn=document.getElementById("submit");
+function message(c,t){msg.className="msg "+c;msg.textContent=t}
+form.addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(API_URL.includes("PASTE_")) return message("err","Backend is not connected yet. Complete the Google Apps Script setup.");
+ const file=document.getElementById("resume").files[0];
+ if(!file)return message("err","Please upload your resume.");
+ if(file.size>8*1024*1024)return message("err","Resume must be 8 MB or smaller.");
+ btn.disabled=true;btn.textContent="Submitting...";
+ try{
+  const b=new Uint8Array(await file.arrayBuffer());let s="",chunk=32768;
+  for(let i=0;i<b.length;i+=chunk)s+=String.fromCharCode(...b.subarray(i,i+chunk));
+  const data={firstName:firstName.value.trim(),lastName:lastName.value.trim(),mobile:mobile.value.trim(),email:email.value.trim(),
+  experience:experience.value,location:location.value.trim(),technology:technology.value,certifications:certifications.value.trim(),
+  notes:notes.value.trim(),serviceCharge:document.querySelector('input[name="charge"]:checked').value,fileName:file.name,
+  mimeType:file.type||"application/octet-stream",fileBase64:btoa(s)};
+  await fetch(API_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)});
+  form.reset();message("ok","Profile submitted successfully. Your Rexora registration number will be generated by the system.");
+ }catch(x){console.error(x);message("err","Submission failed. Please try again.");}
+ finally{btn.disabled=false;btn.textContent="Submit Profile";}
+});
+</script>
+</body></html>
